@@ -3,10 +3,10 @@ package main
 import (
 	"crypto/tls"
 
-	"fmt"
+	//	"fmt"
 	"io/ioutil"
 	"os"
-	//	"strconv"
+	"strconv"
 	"strings"
 
 	"gopkg.in/gomail"
@@ -71,17 +71,17 @@ func main() {
 
 	nameConfigMail := "mail-config.cfg"
 
-	readcfg(nameConfigMail)
+	cfgs := readcfg(nameConfigMail)
 
 	maskFileForAttach := "xlsx"
 	addressFrom := "client.service@kazan.2gis.ru"
 	addressTo := "i.saifutdinov@kazan.2gis.ru"
 	textSubject := "KAZAN LOG ZVONKOV"
 
-	userMail := "client.service"
-	passwdMail := "asdf1234!!"
-	serverMail := "mx.2gis.local"
-	portMail := 25
+	userMail := cfgs["userMail"]
+	passwdMail := cfgs["passwdMail"]
+	serverMail := cfgs["serverMail"]
+	portMail, _ := strconv.Atoi(cfgs["portMail"])
 
 	readcfg(nameConfigMail)
 
