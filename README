@@ -1,1 +1,5 @@
-./go-send-mail -from="client.service@kazan.2gis.ru" -maskfile="xlsx" -to="i.saifutdinov@kazan.2gis.ru" -subject="KAZAN: LOG ZVONKOV" message="Hello"
+конфиг файла для почты  с именем  mail-config.cfg:
+
+адресСервера;порт;имяПользователя;пароль;
+
+./go-send-mail -from="client.service@mail.ru" -maskfile="xlsx" -to="i.saifutdinov@mail.ru" -subject="KAZAN: LOG ZVONKOV" message="Hello"
