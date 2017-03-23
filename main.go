@@ -3,7 +3,8 @@ package main
 import (
 	"crypto/tls"
 
-	//	"fmt"
+	"flag"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -67,29 +68,50 @@ func readcfg(namef string) map[string]string {
 	return res
 }
 
+var (
+	maskFileForAttach string
+	addressFrom       string
+	addressTo         string
+	textSubject       string
+	bodyMail          string
+)
+
+func parseArgs() bool {
+	flag.StringVar(&maskFileForAttach, "maskfile", "", "флаг расширения файлов которые прикрепляются к письму")
+	flag.StringVar(&addressFrom, "from", "", "адрес от кого отправляются")
+	flag.StringVar(&addressTo, "to", "", "кому отправляются письма")
+	flag.StringVar(&textSubject, "subject", "", "тема письма")
+	flag.StringVar(&bodyMail, "message", "", "текст письма в виде html")
+	flag.Parse()
+	return true
+}
+
 func main() {
+
+	if !parseArgs() {
+		return
+	}
+
+	fmt.Println(maskFileForAttach)
+	fmt.Println(addressFrom)
+	fmt.Println(addressTo)
+	fmt.Println(textSubject)
+	fmt.Println(bodyMail)
 
 	nameConfigMail := "mail-config.cfg"
 
 	cfgs := readcfg(nameConfigMail)
-
-	maskFileForAttach := "xlsx"
-	addressFrom := "client.service@kazan.2gis.ru"
-	addressTo := "i.saifutdinov@kazan.2gis.ru"
-	textSubject := "KAZAN LOG ZVONKOV"
 
 	userMail := cfgs["userMail"]
 	passwdMail := cfgs["passwdMail"]
 	serverMail := cfgs["serverMail"]
 	portMail, _ := strconv.Atoi(cfgs["portMail"])
 
-	readcfg(nameConfigMail)
-
 	m := gomail.NewMessage()
 	m.SetHeader("From", addressFrom)
 	m.SetHeader("To", addressTo)
 	m.SetHeader("Subject", textSubject)
-	m.SetBody("text/html", "Hello !!!!")
+	m.SetBody("text/html", bodyMail)
 
 	// фильтрация файлов по маске maskFileForAttach
 	listFileForAttach := getListFileNameFromDirectory("./")

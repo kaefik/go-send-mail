@@ -1,0 +1,1 @@
+./go-send-mail -from="client.service@kazan.2gis.ru" -maskfile="xlsx" -to="i.saifutdinov@kazan.2gis.ru" -subject="KAZAN: LOG ZVONKOV" message="Hello"
